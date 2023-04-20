@@ -1,0 +1,11 @@
+﻿
+@if(TempData["succes"] != null){
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script >
+        
+        toastr.success('@TempData["succes"]');
+    </script>
+    @*<h3 class="text-success">@toastr.success(TempData["succes"])</h3>*@
+}

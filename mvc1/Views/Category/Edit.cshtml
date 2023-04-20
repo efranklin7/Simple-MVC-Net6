@@ -1,0 +1,30 @@
+﻿@model Category // work with the model in view
+
+
+<h1>Edit</h1>
+
+<form method="post" class="">
+    <div asp-validation-summary="All">
+
+    </div>
+    
+   <label  class="form-label mb-1" asp-for="Name">Name</label>
+    <span asp-validation-for="Name" class="text-bg-danger"></span>
+    <input  class="form-control mb-2" asp-for="Name" />
+    
+    <label class="form-label mb-1" asp-for="DisplayOrder"></label>
+
+    <span asp-validation-for="DisplayOrder" class="text-bg-danger"></span>
+    <input class="form-control mb-1" asp-for="DisplayOrder" />
+    
+
+    <button class="btn btn-warning" type="submit">Update</button>
+    <a class="btn btn-secondary" asp-controller="Category" asp-action="Index">Go Back</a>
+
+
+</form>
+@section Scripts{
+@{
+    <partial name="_ValidationScriptsPartial"/>
+}
+}
