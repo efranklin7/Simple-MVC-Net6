@@ -7,59 +7,40 @@ using bulkybook.DataAccess;
 namespace mvc1.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CoverTypeController : Controller
+    public class ProductController : Controller
     {
-        private readonly AppDbContext context;
-
-        public CoverTypeController(AppDbContext context)
+        private readonly AppDbContext db;
+        public ProductController(AppDbContext context)
         {
-            this.context = context;
+            this.db = context;
         }
 
         public async Task<ActionResult> Index()
         {
-            var list = await context.CoverTypes.ToListAsync();
+            var list = await db.Products.ToListAsync();
             return View(list);
 
         }
-        public ActionResult Post()
+        
+        public ActionResult Upsert(int? id)
         {
-
-            return View("Post");
-
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken] // csrf
-        public async Task<ActionResult> Post(CoverType obj)
-        {
-            if (!ModelState.IsValid)
+            // id = null : create
+            if (id==null)
             {
                 return View();
             }
-            //if (obj.Name == obj..ToString())
-            //{
-            //    ModelState.AddModelError("Name", "same value");
-            //}
-
-            context.CoverTypes.Add(obj);
-            await context.SaveChangesAsync();
-            TempData["succes"] = "created succesfully";
-            return RedirectToAction("Index");
-            //return View("index");
-
-        }
-        public ActionResult Edit(int? id)
-        {
-            CoverType? result = context.CoverTypes.Find(id);
-            if (result == null)
+            else
             {
-                return NotFound();
+                return View(id);
             }
-            return View(result);
+
+            // id = not null : Edit
+           
+
         }
         [HttpPost]
         [ValidateAntiForgeryToken] // csrf
-        public async Task<ActionResult> Edit(CoverType obj)
+        public async Task<ActionResult> Upsert(CoverType obj)
         {
             if (!ModelState.IsValid)
             {
