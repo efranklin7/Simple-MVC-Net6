@@ -1,5 +1,67 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Product
+
+
+<h1>Edit</h1>
+
+<form method="post" class="">
+    <div asp-validation-summary="All">
+
+    </div>
+
+    <label class="form-label mb-1" asp-for="Title">Title</label>
+    <span asp-validation-for="Title" class="text-bg-danger"></span>
+    <input class="form-control mb-2" asp-for="Title" />
+
+    <label class="form-label mb-1" asp-for="Description">Description</label>
+    <span asp-validation-for="Description" class="text-bg-danger"></span>
+    <textarea class="form-control mb-2" rows="3" asp-for="Description"> </textarea>
+
+    <label class="form-label mb-1" asp-for="ISBN">ISBN</label>
+    <span asp-validation-for="ISBN" class="text-bg-danger"></span>
+    <input class="form-control mb-2" asp-for="ISBN" />
+
+    <label class="form-label mb-1" asp-for="Author">Author</label>
+    <span asp-validation-for="Author" class="text-bg-danger"></span>
+    <input class="form-control mb-2" asp-for="Author" />
+   
+    <label class="form-label mb-1" asp-for="ListPrice">ListPrice</label>
+    <span asp-validation-for="ListPrice" class="text-bg-danger"></span>
+    <input class="form-control mb-2" asp-for="ListPrice" />
+
+    <label class="form-label mb-1" asp-for="Price">Price</label>
+    <span asp-validation-for="Price" class="text-bg-danger"></span>
+    <input class="form-control mb-2" asp-for="Price" />
+
+    <label class="form-label mb-1" asp-for="Price50">Price50</label>
+    <span asp-validation-for="Price50" class="text-bg-danger"></span>
+    <input class="form-control mb-2" asp-for="Price50" />
+
+    <label class="form-label mb-1" asp-for="Price100" >Price100</label>
+    <span asp-validation-for="Price100" class="text-bg-danger"></span>
+    <input class="form-control mb-2" asp-for="Price100" />
+
+    <label class="form-label mb-1" asp-for="CategoryId"></label>
+    <span asp-validation-for="CategoryId" class="text-bg-danger"></span>
+    <select class="form-select mb-2"  asp-items="ViewBag.CategoryList">
+        <option disabled selected> Select Category</option>
+    </select>
+
+    <label class="form-label mb-1" asp-for="CoverTypeId"></label>
+    <span asp-validation-for="CoverTypeId" class="text-bg-danger"></span>
+    <select class="form-select mb-2" asp-items="@(ViewData["CoverTypeList"] as IEnumerable<SelectListItem>)">
+        <option disabled selected> Select Category</option>
+    </select>
+
+    
+    
+
+    <button class="btn btn-warning" type="submit">Update</button>
+    <a class="btn btn-secondary" asp-controller="CoverType" asp-action="Index">Go Back</a>
+
+
+</form>
+@section Scripts{
 @{
+    <partial name="_ValidationScriptsPartial"/>
+}
 }

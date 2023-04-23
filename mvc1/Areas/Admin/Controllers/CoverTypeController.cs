@@ -6,12 +6,12 @@ using bulkybook.DataAccess;
 
 namespace mvc1.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class ProductController : Controller
+    public class CoverTypeController : Controller
+    
     {
         private readonly AppDbContext context;
 
-        public ProductController(AppDbContext context)
+        public CoverTypeController(AppDbContext context)
         {
             this.context = context;
         }
