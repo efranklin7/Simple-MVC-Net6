@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using mvc1;
+using bulkybook.DataAccess;
 
 #nullable disable
 
-namespace mvc1.Migrations
+namespace bulkybook.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230419041507_categoryTable")]
-    partial class categoryTable
+    [Migration("20230421073931_CategoryTable")]
+    partial class CategoryTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace mvc1.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("mvc1.Models.Category", b =>
+            modelBuilder.Entity("bulkybook.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

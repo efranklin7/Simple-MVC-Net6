@@ -1,0 +1,25 @@
+﻿@model CoverType // work with the model in view
+
+
+<h1>Delete</h1>
+
+<form method="post" class="">
+    <div asp-validation-summary="All">
+    </div>
+
+    <label class="form-label mb-1" asp-for="Name">Name</label>
+    <span asp-validation-for="Name" class="text-bg-danger"></span>
+    <input class="form-control mb-2" asp-for="Name" disabled/>
+
+
+
+    <button class="btn btn-warning" type="submit">Delete</button>
+    <a class="btn btn-secondary" asp-controller="CoverType" asp-action="Index">Go Back</a>
+
+
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

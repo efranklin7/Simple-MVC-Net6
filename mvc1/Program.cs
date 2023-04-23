@@ -1,5 +1,6 @@
+using bulkybook.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using mvc1;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,6 @@ app.UseAuthorization(); //authenticate is first then authorization
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

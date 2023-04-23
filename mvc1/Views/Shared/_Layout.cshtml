@@ -28,8 +28,15 @@
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                      
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-secondary " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">Content Managment</a>
+                            <div class="dropdown-menu " data-bs-popper="static">
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="CoverType" asp-action="Index">Cover Type</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
+                                
+                            </div>
                         </li>
                     </ul>
                 </div>

@@ -1,21 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using mvc1.Models;
+using bulkybook.Models;
+using bulkybook.DataAccess;
 
-namespace mvc1.Controllers
+
+namespace mvc1.Areas.Admin.Controllers
 {
-    public class CategoryController : Controller
+    [Area("Admin")]
+    public class CoverTypeController : Controller
     {
         private readonly AppDbContext context;
 
-        public CategoryController(AppDbContext context)
+        public CoverTypeController(AppDbContext context)
         {
             this.context = context;
         }
 
         public async Task<ActionResult> Index()
         {
-            var list = await context.Categories.ToListAsync();
+            var list = await context.CoverTypes.ToListAsync();
             return View(list);
 
         }
@@ -27,57 +30,27 @@ namespace mvc1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken] // csrf
-        public async Task<ActionResult> Post(Category obj)
+        public async Task<ActionResult> Post(CoverType obj)
         {
-           if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View();
             }
-            if (obj.Name == obj.DisplayOrder.ToString()) 
-            {
-                ModelState.AddModelError("Name", "same value");
-            }
+            //if (obj.Name == obj..ToString())
+            //{
+            //    ModelState.AddModelError("Name", "same value");
+            //}
 
-            context.Categories.Add(obj);
+            context.CoverTypes.Add(obj);
             await context.SaveChangesAsync();
-            TempData["succes"] ="created succesfully";
+            TempData["succes"] = "created succesfully";
             return RedirectToAction("Index");
             //return View("index");
 
         }
         public ActionResult Edit(int? id)
         {
-            Category? result =context.Categories.Find(id);
-            if (result==null)
-            {
-                return NotFound();
-            }
-            return View(result);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken] // csrf
-        public async Task<ActionResult> Edit(Category obj)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-            if (obj.Name == obj.DisplayOrder.ToString())
-            {
-                ModelState.AddModelError("Name", "Can not be same value");
-                return View();
-            }
-            context.Categories.Update(obj);
-            await context.SaveChangesAsync();
-            TempData["succes"] = "Edited succesfully";
-            return RedirectToAction("Index");
-            //return View("index");
-
-        }
-        public ActionResult Delete(int? id)
-        {
-            Category? result = context.Categories.Find(id);
+            CoverType? result = context.CoverTypes.Find(id);
             if (result == null)
             {
                 return NotFound();
@@ -86,11 +59,41 @@ namespace mvc1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken] // csrf
-        public async Task<ActionResult> Delete(Category obj)
+        public async Task<ActionResult> Edit(CoverType obj)
         {
-            var id = context.Categories.Find(obj.Id);
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            //if (obj.Name == obj.DisplayOrder.ToString())
+            //{
+            //    ModelState.AddModelError("Name", "Can not be same value");
+            //    return View();
+            //}
+            context.CoverTypes.Update(obj);
+            await context.SaveChangesAsync();
+            TempData["succes"] = "Edited succesfully";
+            return RedirectToAction("Index");
+            //return View("index");
+
+        }
+        public ActionResult Delete(int? id)
+        {
+            CoverType? result = context.CoverTypes.Find(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return View(result);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken] // csrf
+        public async Task<ActionResult> Delete(CoverType obj)
+        {
+            var id = context.CoverTypes.Find(obj.Id);
             if (id == null) { return NotFound(); }
-            context.Categories.Remove(id);
+            context.CoverTypes.Remove(id);
             await context.SaveChangesAsync();
             TempData["succes"] = "Deleted succesfully";
             return RedirectToAction("Index");

@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using mvc1.Models;
+﻿using bulkybook.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using System.Diagnostics;
 
-namespace mvc1.Controllers
+namespace mvc1.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

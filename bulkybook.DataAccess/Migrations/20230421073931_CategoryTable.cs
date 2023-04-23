@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace mvc1.Migrations
+namespace bulkybook.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class categoryTable : Migration
+    public partial class CategoryTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

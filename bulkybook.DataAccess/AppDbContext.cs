@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using mvc1.Models;
+﻿using bulkybook.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace mvc1
+namespace bulkybook.DataAccess
 {
     public class AppDbContext : DbContext
     {
@@ -9,5 +9,7 @@ namespace mvc1
         {
         }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<CoverType> CoverTypes { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
