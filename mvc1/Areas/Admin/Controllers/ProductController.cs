@@ -21,7 +21,7 @@ namespace mvc1.Areas.Admin.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var list = await context.Products.ToListAsync();
+            var list = await context.Products.Include(u=>u.Category).ToListAsync();
             return View(list);
 
         }
@@ -57,17 +57,17 @@ namespace mvc1.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken] // csrf
-        public async Task<ActionResult> Upsert(Product? obj,IFormFile? file)
+        public async Task<ActionResult> Upsert(ProductVM obj,IFormFile? file)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
               
-            var wwwRootPath =hostEnvironment.WebRootPath;//get the host environmten (wwwrootpath)
+            var wwwRootPath = hostEnvironment.WebRootPath;//get the host environmten (wwwrootpath)
             if (file != null)
             {
-                var upload=Path.Combine(wwwRootPath,"/images/Products"); // the path to upload
+                var upload=Path.Combine(wwwRootPath,"Images/Products"); // the path to upload
                 string fileName=Guid.NewGuid().ToString(); //unique identifier
                 var extension = Path.GetExtension(file.FileName); //gets the extension from the file name uploaded
 
@@ -75,10 +75,10 @@ namespace mvc1.Areas.Admin.Controllers
                 {
                     file.CopyTo(filestream);
                 }
-                obj.ImgUrl = "/images/products/" + fileName + extension; 
+                obj.product.ImgUrl = "/images/products/" + fileName + extension; 
                         
             }
-            context.Products.Add(obj);
+            context.Products.Add(obj.product);
             await context.SaveChangesAsync();
             TempData["succes"] = "Product added succesfully";
             return RedirectToAction("Index");

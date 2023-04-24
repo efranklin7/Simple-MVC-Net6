@@ -1,7 +1,8 @@
-﻿@model bulkybook.Models.ViewModels.ProductVM;
+﻿@model bulkybook.Models.ViewModels.ProductVM
 
 
-@*<h1 class="text-warning">@(Model.product.Id != 0  ? "Update" : "Create" )</h1>*@
+<h1 class="text-warning">@(Model.product.Id != 0  ? "Update" : "Create" )</h1>
+
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
     <div asp-validation-summary="All">
@@ -54,20 +55,20 @@
     <div>
         <label class="form-label mb-1" asp-for="product.ImgUrl">Image</label>
         
-        <input class="form-control mb-2"type="file" name="file" id="ImageUp" />
+        <input class="form-control mb-2" type="file" name="file" id="ImageUp" />
     </div>
     <div class="row">
         <div class="col-6">
             <label class="form-label mb-1" asp-for="product.CategoryId"></label>
             <span asp-validation-for="product.CategoryId" class="text-bg-danger"></span>
-            <select class="form-select mb-2" asp-items="Model.CategoryList">
+            <select class="form-select mb-2" asp-items="Model.CategoryList" asp-for="@Model.product.CategoryId">
                 <option disabled selected> Select Category</option>
             </select>
         </div>
         <div class="col-6">
             <label class="form-label mb-1" asp-for="product.CoverTypeId"></label>
             <span asp-validation-for="product.CoverTypeId" class="text-bg-danger"></span>
-            <select class="form-select mb-2" asp-items="Model.CoverTypeList">
+            <select class="form-select mb-2" asp-items="Model.CoverTypeList" asp-for="@Model.product.CoverTypeId">
                 <option disabled selected> Select Cover Type</option>
             </select>
 

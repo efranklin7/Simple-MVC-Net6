@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Product>
 @{
     ViewData["Title"] = "index";
 }
@@ -35,6 +35,12 @@
             <th class="text-center">
                 Category
             </th>
+            <th class="text-center">
+                Edit
+            </th>
+            <th class="text-center">
+                Delete
+            </th>
 
         
         </tr>
@@ -45,7 +51,19 @@
 
             <tr>
                 <td class="text-center">
-                    @obj.Name
+                    @obj.Title
+                </td>
+                <td class="text-center">
+                    @obj.ISBN
+                </td>
+                <td class="text-center">
+                    @obj.Price
+                </td>
+                <td class="text-center">
+                    @obj.Author
+                </td>
+                <td class="text-center">
+                    @obj.Category.Name
                 </td>
 
                 <td class="text-center">

@@ -36,14 +36,14 @@ namespace bulkybook.Models
         [ValidateNever]
         public string ImgUrl { get; set; }
         [Required]
-        public int CategoryId { get; set; } //creates a fk relation
         [ForeignKey("CategoryId")]
+        public int CategoryId { get; set; } //creates a fk relation
         [ValidateNever]
         public Category Category { get; set; }
         [Required]
 
-        public int CoverTypeId { get; set; } //creates a fk relation
         [ForeignKey("CoverTypeId")]
+        public int CoverTypeId { get; set; } //creates a fk relation
         [ValidateNever]
         public CoverType CoverType { get; set; }
 
