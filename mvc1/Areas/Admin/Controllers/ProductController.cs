@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using bulkybook.Models;
 using bulkybook.DataAccess;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using bulkybook.Models.ViewModels;
 
 namespace mvc1.Areas.Admin.Controllers
 {
@@ -10,9 +11,12 @@ namespace mvc1.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly AppDbContext context;
-        public ProductController(AppDbContext context)
+        private readonly IWebHostEnvironment hostEnvironment;
+
+        public ProductController(AppDbContext context, IWebHostEnvironment hostEnvironment)
         {
             this.context = context;
+            this.hostEnvironment = hostEnvironment;
         }
 
         public async Task<ActionResult> Index()
@@ -21,49 +25,62 @@ namespace mvc1.Areas.Admin.Controllers
             return View(list);
 
         }
-        
+
         public ActionResult Upsert(int? id)
         {
-            Product product = new Product();
-            IEnumerable<SelectListItem> CategoryList= context.Categories.ToList().Select(c =>
-            new SelectListItem {Text=c.Name,Value=c.Id.ToString()});
-
-            IEnumerable<SelectListItem> CoverTypeList = context.CoverTypes.ToList().Select(c =>
-            new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
-
             // id = null : create
+            ProductVM productVM = new()
+            {
+
+                product = new Product(),
+                CategoryList = context.Categories.ToList().Select(c =>
+                new SelectListItem { Text = c.Name, Value = c.Id.ToString() }),
+
+                CoverTypeList = context.CoverTypes.ToList().Select(c =>
+                new SelectListItem { Text = c.Name, Value = c.Id.ToString() })
+            };
+
             if (id==null||id==0)
             {
-                ViewBag.CategoryList = CategoryList;
-                ViewData["CoverTypeList"] = CoverTypeList;
-                return View(product);
+                //ViewBag.CategoryList = CategoryList;
+                //ViewData["CoverTypeList"] = CoverTypeList;
+                return View(productVM);
             }
+            // id = not null : Edit
             else
             {
                 return View(id);
             }
 
-            // id = not null : Edit
            
 
         }
         [HttpPost]
         [ValidateAntiForgeryToken] // csrf
-        public async Task<ActionResult> Upsert(Product obj)
+        public async Task<ActionResult> Upsert(Product? obj,IFormFile? file)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
+              
+            var wwwRootPath =hostEnvironment.WebRootPath;//get the host environmten (wwwrootpath)
+            if (file != null)
+            {
+                var upload=Path.Combine(wwwRootPath,"/images/Products"); // the path to upload
+                string fileName=Guid.NewGuid().ToString(); //unique identifier
+                var extension = Path.GetExtension(file.FileName); //gets the extension from the file name uploaded
 
-            //if (obj.Name == obj.DisplayOrder.ToString())
-            //{
-            //    ModelState.AddModelError("Name", "Can not be same value");
-            //    return View();
-            //}
-            context.Products.Update(obj);
+                using (var filestream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                {
+                    file.CopyTo(filestream);
+                }
+                obj.ImgUrl = "/images/products/" + fileName + extension; 
+                        
+            }
+            context.Products.Add(obj);
             await context.SaveChangesAsync();
-            TempData["succes"] = "Edited succesfully";
+            TempData["succes"] = "Product added succesfully";
             return RedirectToAction("Index");
             //return View("index");
 
